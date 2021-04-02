@@ -22,6 +22,10 @@ public class UserPrototype {
         return new User("mashazz@mail.ru", "Aa1234567",
                 "Masha", "Ivanova", Collections.singleton(new Role(3, "ROLE_STUDENT")));
     }
+    public static User getUserWithoutRoles() {
+        return new User("mashazz@mail.ru", "Aa1234567",
+                "Masha", "Ivanova");
+    }
 
     public static User getUserWithInvalidEmail() {
         User userWithInvalidEmail = new User();
