@@ -8,10 +8,11 @@ import com.quiz.service.interf.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
 
 @Log
 @RestController
@@ -21,7 +22,7 @@ public class AuthController {
     private final JwtProvider jwtProvider;
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@Validated @RequestBody  RegistrationRequest registrationRequest) throws ValidationException {
+    public ResponseEntity<String> registerUser(@Valid @RequestBody  RegistrationRequest registrationRequest) throws ValidationException {
         User u = new User();
         log.info("registration request from /register : " + registrationRequest.toString());
 
@@ -39,9 +40,9 @@ public class AuthController {
     }
 
     @PostMapping("/auth")
-    public AuthResponse auth(@Validated @RequestBody AuthRequest request) throws UserNotFoundException {
+    public AuthResponse auth(@Valid @RequestBody AuthRequest request) throws UserNotFoundException {
         String token = null;
-        log.severe(request.toString());
+        log.info(request.toString());
         User user = userService.findUserByEmailAndPassword(request.getLogin(), request.getPassword());
         if (user != null) {
             token = jwtProvider.generateToken(user.getEmail());
